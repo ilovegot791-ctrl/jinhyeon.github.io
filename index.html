@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>포트폴리오 매니저</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Design Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
-            --input-bg: #2a2a2a;
-            --accent-color: #3b82f6;
-            --text-main: #ffffff;
-            --text-sub: #a0a0a0;
-            --border-color: #333333;
-            --danger-color: #ef4444;
+            --bg-color: #0d0d0e;
+            --card-bg: #161618;
+            --text-main: #f1f1f3;
+            --text-sub: #8e8e93;
+            --border-color: #242428;
+            --accent-color: #ffffff;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -23,372 +21,358 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.5;
-            padding: 40px 20px;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        header {
-            margin-bottom: 30px;
-            text-align: left;
-        }
-
-        header h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        header p { color: var(--text-sub); font-size: 0.95rem; }
-
-        /* 컨트롤 영역 */
-        .controls {
+        /* 1. 상단 네비게이션 (왼쪽 로고, 오른쪽 카테고리) */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
-            gap: 12px;
-            flex-wrap: wrap;
+            padding: 0 40px;
+            background-color: rgba(13, 13, 14, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
         }
 
-        .btn-group { display: flex; gap: 8px; }
-
-        .btn {
-            background-color: var(--input-bg);
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
             color: var(--text-main);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .category-menu {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .category-btn {
+            background: none;
+            border: none;
+            color: var(--text-sub);
+            font-size: 0.95rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: color 0.2s ease;
+            padding: 8px 0;
+            position: relative;
         }
 
-        .btn:hover { background-color: #333333; }
-        .btn-primary { background-color: var(--accent-color); border: none; }
-        .btn-primary:hover { background-color: #2563eb; }
-        .btn-danger { color: var(--danger-color); border-color: rgba(239, 68, 68, 0.3); }
-        .btn-danger:hover { background-color: rgba(239, 68, 68, 0.1); }
-
-        /* 프로젝트 카드 리스트 */
-        .project-list {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
+        .category-btn:hover, .category-btn.active {
+            color: var(--accent-color);
         }
 
-        .project-card {
+        .category-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+
+        /* 메인 컨테이너 */
+        main {
+            max-width: 1200px;
+            margin: 110px auto 60px;
+            padding: 0 20px;
+        }
+
+        /* 2. 작업물 그리드 레이아웃 */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
             background-color: var(--card-bg);
             border-radius: 12px;
-            border: 1px solid var(--border-color);
-            padding: 20px;
-        }
-
-        .inputs-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        input[type="text"], textarea {
-            width: 100%;
-            background-color: var(--input-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            padding: 10px 12px;
-            border-radius: 6px;
-            font-family: inherit;
-            font-size: 0.9rem;
-        }
-
-        input[type="text"]:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
-
-        .input-category { color: var(--accent-color); font-weight: 600; }
-        .input-title { font-size: 1.1rem; font-weight: 600; }
-
-        /* 드래그 앤 드롭 영역 */
-        .drop-zone {
-            border: 1px dashed var(--border-color);
-            border-radius: 6px;
-            padding: 20px;
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.02);
-            cursor: pointer;
-            margin-top: 12px;
-            transition: background 0.2s;
-        }
-
-        .drop-zone:hover, .drop-zone.dragover {
-            background-color: rgba(255, 255, 255, 0.05);
-            border-color: var(--accent-color);
-        }
-
-        .drop-zone-text {
-            color: var(--text-sub);
-            font-size: 0.85rem;
-            pointer-events: none;
-        }
-
-        /* 이미지 갤러리 */
-        .image-gallery {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 12px;
-        }
-
-        .img-item {
-            position: relative;
-            border-radius: 6px;
             overflow: hidden;
             border: 1px solid var(--border-color);
-        }
-
-        .img-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .img-delete-btn {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            width: 26px;
-            height: 26px;
             cursor: pointer;
+            transition: transform 0.3s ease, border-color 0.3s ease;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
+            flex-direction: column;
         }
 
-        .img-delete-btn:hover { background: var(--danger-color); }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: #3d3d42;
+        }
 
-        .card-actions {
+        .card-img-wrapper {
+            width: 100%;
+            height: 240px;
+            background-color: #202024;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover .card-img-wrapper img {
+            transform: scale(1.04);
+        }
+
+        .card-info {
+            padding: 20px;
             display: flex;
-            justify-content: flex-end;
-            margin-top: 16px;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .card-tag {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: var(--text-sub);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card.hide {
+            display: none;
+        }
+
+        /* 3. 모달 (상세 보기 팝업) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.open { display: flex; }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-sub);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .close-btn:hover { color: var(--text-main); }
+
+        .modal-title { font-size: 1.5rem; margin-bottom: 8px; }
+        .modal-category { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 20px; }
+        .modal-img { width: 100%; border-radius: 8px; margin-bottom: 20px; }
+        .modal-desc { line-height: 1.7; color: #d1d1d6; }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; }
+            .category-menu { gap: 12px; }
+            .category-btn { font-size: 0.85rem; }
+            .portfolio-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Portfolio Manager</h1>
-            <p>작업물과 이미지를 자유롭게 수정하고 관리하세요.</p>
-        </header>
 
-        <div class="controls">
-            <span id="project-count" style="color: var(--text-sub); font-size: 0.9rem;">총 0개의 프로젝트</span>
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="addNewProject()">+ 작업물 추가</button>
-                <button class="btn" onclick="saveProjectData()">저장</button>
-                <button class="btn" onclick="document.getElementById('loadFileInput').click()">불러오기</button>
-                <input type="file" id="loadFileInput" accept=".json" style="display: none;" onchange="loadProjectData(event)">
-            </div>
+    <!-- 상단 네비게이션 -->
+    <nav>
+        <!-- 왼쪽: 로고 -->
+        <a href="#" class="logo">PORTFOLIO.</a>
+
+        <!-- 오른쪽: 3가지 카테고리 -->
+        <ul class="category-menu">
+            <li><button class="category-btn active" onclick="filterCategory('all')">ALL</button></li>
+            <li><button class="category-btn" onclick="filterCategory('office')">사무디자인·로고</button></li>
+            <li><button class="category-btn" onclick="filterCategory('web')">웹디자인</button></li>
+            <li><button class="category-btn" onclick="filterCategory('game')">게임·애니 (2D/3D)</button></li>
+        </ul>
+    </nav>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main>
+        <div class="portfolio-grid" id="portfolio-grid">
+            <!-- 자바스크립트로 동적 카드 생성 -->
         </div>
+    </main>
 
-        <div id="project-list" class="project-list"></div>
+    <!-- 상세보기 모달 -->
+    <div class="modal" id="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title" id="modal-title"></h2>
+            <p class="modal-category" id="modal-category"></p>
+            <img src="" alt="" class="modal-img" id="modal-img">
+            <p class="modal-desc" id="modal-desc"></p>
+        </div>
     </div>
 
     <script>
-        let projects = [
+        // 포트폴리오 데이터
+        const portfolioData = [
+            /* 1. 사무디자인 - 로고 */
             {
                 id: 1,
-                category: "게임 디자인 / 스토리",
-                title: "공포의 술래잡기 - 캐릭터 스토리 & 세계관",
-                tags: "스토리보드, 캐릭터설정, 세계관",
-                description: "공포의 술래잡기 게임의 메인 캐릭터 스토리 구성 및 배경 연출 디자인 작업물입니다.",
-                images: [],
-                additional_text: ""
+                category: 'office',
+                categoryLabel: '사무디자인 · 로고',
+                title: '모던 브랜드 CI / 로고 디자인',
+                desc: '기업 아이덴티티를 명확하게 전달하기 위한 미니멀 세리프 로고 및 사무용 서식 디자인 패키지입니다.',
+                image: 'https://picsum.photos/700/500?random=10'
             },
             {
                 id: 2,
-                category: "원화 / 리뉴얼",
-                title: "공포의 술래잡기 - 디자인 수정 & 개선 과정",
-                tags: "원화수정, 피드백반영, 디테일개선",
-                description: "초기 시안에서 피드백을 수용하여 비주얼 퀄리티와 분위기를 극대화한 수정 프로세스입니다.",
-                images: [],
-                additional_text: ""
+                category: 'office',
+                categoryLabel: '사무디자인 · 로고',
+                title: '스타트업 리브랜딩 & 브로슈어',
+                desc: '테크 스타트업의 신규 로고 및 사원증, 명함, 브랜딩 문서 가이드라인을 작업했습니다.',
+                image: 'https://picsum.photos/700/500?random=11'
             },
+
+            /* 2. 웹디자인 */
             {
                 id: 3,
-                category: "캐릭터 디자인 / 패러디",
-                title: "마법소녀 마도카 마기카 - 반려견 패러디 캐릭터",
-                tags: "팬아트, 반려견패러디, 일러스트",
-                description: "마법소녀 마도카 마기카의 세계관과 캐릭터 특징을 반려견 컨셉으로 재해석한 3차 창작 패러디 디자인입니다.",
-                images: [],
-                additional_text: ""
+                category: 'web',
+                categoryLabel: '웹디자인',
+                title: '이커머스 브랜드 웹사이트',
+                desc: '사용자 경험(UX) 최적화 및 간결한 UI 레이아웃을 통해 구매 전환율을 높인 반응형 웹 인터페이스 디자인입니다.',
+                image: 'https://picsum.photos/700/500?random=20'
+            },
+            {
+                id: 4,
+                category: 'web',
+                categoryLabel: '웹디자인',
+                title: 'SaaS 대시보드 플랫폼 UI',
+                desc: '데이터 시각화를 극대화하고 다크모드 환경에 맞춰 가독성을 확보한 B2B 솔루션 대시보드입니다.',
+                image: 'https://picsum.photos/700/500?random=21'
+            },
+
+            /* 3. 게임 및 애니메이션 디자인 (2D/3D 캐릭터, 무기, 소품) */
+            {
+                id: 5,
+                category: 'game',
+                categoryLabel: '게임 · 애니메이션 디자인',
+                title: 'SF 판타지 3D 캐릭터 모델링',
+                desc: 'ZBrush 및 Maya를 활용해 고품질 텍스처링과 리깅까지 마친 게임용 메인 캐릭터 모델링입니다.',
+                image: 'https://picsum.photos/700/500?random=30'
+            },
+            {
+                id: 6,
+                category: 'game',
+                categoryLabel: '게임 · 애니메이션 디자인',
+                title: '2D 원화 - 판타지 무기 & 소품 컨셉아트',
+                desc: '게임 세계를 구성하는 전설 등급 무기 및 소품의 2D 컨셉 시안과 디테일 시트입니다.',
+                image: 'https://picsum.photos/700/500?random=31'
+            },
+            {
+                id: 7,
+                category: 'game',
+                categoryLabel: '게임 · 애니메이션 디자인',
+                title: '애니메이션용 2D 캐주얼 캐릭터 시트',
+                desc: '애니메이션 원화 작업용 턴어라운드 표현과 다양한 감정 표현 표정이 담긴 캐릭터 디자인입니다.',
+                image: 'https://picsum.photos/700/500?random=32'
             }
         ];
 
-        function renderProjects() {
-            const listContainer = document.getElementById('project-list');
-            listContainer.innerHTML = '';
-            document.getElementById('project-count').innerText = `총 ${projects.length}개의 프로젝트`;
-
-            projects.forEach((proj, index) => {
-                const card = document.createElement('div');
-                card.className = 'project-card';
-                card.innerHTML = `
-                    <div class="inputs-group">
-                        <input type="text" class="input-category" value="${proj.category}" placeholder="카테고리" onchange="updateProject(${index}, 'category', this.value)">
-                        <input type="text" class="input-title" value="${proj.title}" placeholder="제목" onchange="updateProject(${index}, 'title', this.value)">
-                        <input type="text" value="${proj.tags}" placeholder="태그 (쉼표로 구분)" onchange="updateProject(${index}, 'tags', this.value)">
-                        <textarea rows="2" placeholder="작업물 설명" onchange="updateProject(${index}, 'description', this.value)">${proj.description}</textarea>
-                        <textarea rows="2" placeholder="추가 상세 내용" onchange="updateProject(${index}, 'additional_text', this.value)">${proj.additional_text}</textarea>
+        // 렌더링 함수
+        function renderPortfolio() {
+            const grid = document.getElementById('portfolio-grid');
+            grid.innerHTML = portfolioData.map(item => `
+                <div class="card" data-category="${item.category}" onclick="openModal(${item.id})">
+                    <div class="card-img-wrapper">
+                        <img src="${item.image}" alt="${item.title}">
                     </div>
-
-                    <div class="drop-zone" id="drop-zone-${index}"
-                         ondragover="handleDragOver(event, ${index})"
-                         ondragleave="handleDragLeave(event, ${index})"
-                         ondrop="handleDrop(event, ${index})"
-                         onclick="triggerFileInput(${index})">
-                        <div class="drop-zone-text">이미지를 드래그하여 놓거나 클릭해서 업로드하세요.</div>
-                        <input type="file" id="file-input-${index}" multiple accept="image/*" style="display:none" onchange="handleFileSelect(event, ${index})">
+                    <div class="card-info">
+                        <span class="card-tag">${item.categoryLabel}</span>
+                        <h3 class="card-title">${item.title}</h3>
+                        <p class="card-desc">${item.desc}</p>
                     </div>
-
-                    <div class="image-gallery" id="gallery-${index}">
-                        ${proj.images.map((imgSrc, imgIndex) => `
-                            <div class="img-item">
-                                <button class="img-delete-btn" onclick="deleteImage(${index}, ${imgIndex})">✕</button>
-                                <img src="${imgSrc}" alt="작업물 이미지">
-                            </div>
-                        `).join('')}
-                    </div>
-
-                    <div class="card-actions">
-                        <button class="btn btn-danger" onclick="deleteProject(${index})">삭제</button>
-                    </div>
-                `;
-                listContainer.appendChild(card);
-            });
+                </div>
+            `).join('');
         }
 
-        function updateProject(index, key, value) {
-            projects[index][key] = value;
-        }
+        // 카테고리 필터링
+        function filterCategory(category) {
+            // 버튼 활성화 스타일 변경
+            const buttons = document.querySelectorAll('.category-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
 
-        function addNewProject() {
-            projects.unshift({
-                id: Date.now(),
-                category: "",
-                title: "",
-                tags: "",
-                description: "",
-                images: [],
-                additional_text: ""
-            });
-            renderProjects();
-        }
-
-        function deleteProject(index) {
-            if (confirm("이 카드를 삭제하시겠습니까?")) {
-                projects.splice(index, 1);
-                renderProjects();
-            }
-        }
-
-        function deleteImage(projIndex, imgIndex) {
-            projects[projIndex].images.splice(imgIndex, 1);
-            renderProjects();
-        }
-
-        function handleDragOver(e, index) {
-            e.preventDefault();
-            document.getElementById(`drop-zone-${index}`).classList.add('dragover');
-        }
-
-        function handleDragLeave(e, index) {
-            e.preventDefault();
-            document.getElementById(`drop-zone-${index}`).classList.remove('dragover');
-        }
-
-        function handleDrop(e, index) {
-            e.preventDefault();
-            document.getElementById(`drop-zone-${index}`).classList.remove('dragover');
-            processFiles(e.dataTransfer.files, index);
-        }
-
-        function triggerFileInput(index) {
-            document.getElementById(`file-input-${index}`).click();
-        }
-
-        function handleFileSelect(e, index) {
-            processFiles(e.target.files, index);
-        }
-
-        function processFiles(files, projIndex) {
-            Array.from(files).forEach(file => {
-                if (file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        projects[projIndex].images.push(e.target.result);
-                        renderProjects();
-                    };
-                    reader.readAsDataURL(file);
+            // 카테고리 카드 필터링
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.classList.remove('hide');
+                } else {
+                    card.classList.add('hide');
                 }
             });
         }
 
-        function saveProjectData() {
-            let filename = prompt('저장할 파일 이름을 입력하세요:', 'portfolio_data.json');
-            if (!filename) return;
-            if (!filename.endsWith('.json')) filename += '.json';
+        // 모달 열기
+        function openModal(id) {
+            const item = portfolioData.find(p => p.id === id);
+            if (!item) return;
 
-            const blob = new Blob([JSON.stringify(projects, null, 2)], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            document.getElementById('modal-title').innerText = item.title;
+            document.getElementById('modal-category').innerText = item.categoryLabel;
+            document.getElementById('modal-img').src = item.image;
+            document.getElementById('modal-desc').innerText = item.desc;
+
+            document.getElementById('modal').classList.add('open');
         }
 
-        function loadProjectData(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const loadedData = JSON.parse(e.target.result);
-                    if (Array.isArray(loadedData)) {
-                        projects = loadedData.map(item => ({
-                            id: item.id || Date.now(),
-                            category: item.category || "",
-                            title: item.title || "",
-                            tags: item.tags || "",
-                            description: item.description || "",
-                            images: item.images || [],
-                            additional_text: item.additional_text || ""
-                        }));
-                        renderProjects();
-                    }
-                } catch (error) {
-                    alert('파일을 읽는 중 오류가 발생했습니다.');
-                }
-            };
-            reader.readAsText(file);
+        // 모달 닫기
+        function closeModal(event) {
+            document.getElementById('modal').classList.remove('open');
         }
 
-        renderProjects();
+        // 초기 실행
+        renderPortfolio();
     </script>
 </body>
 </html>
