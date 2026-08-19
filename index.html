@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design Portfolio</title>
+    <title>김진현 | Design Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,6 +13,7 @@
             --text-sub: #8e8e93;
             --border-color: #242428;
             --accent-color: #ffffff;
+            --highlight: #3b82f6;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -20,10 +21,10 @@
             font-family: 'Pretendard', -apple-system, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
-        /* 1. 상단 네비게이션 (왼쪽 로고, 오른쪽 카테고리) */
+        /* 1. 상단 네비게이션 */
         nav {
             position: fixed;
             top: 0;
@@ -41,16 +42,16 @@
         }
 
         .logo {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            letter-spacing: -0.02em;
             color: var(--text-main);
             text-decoration: none;
+            cursor: pointer;
         }
 
         .category-menu {
             display: flex;
-            gap: 24px;
+            gap: 20px;
             list-style: none;
         }
 
@@ -82,16 +83,87 @@
 
         /* 메인 컨테이너 */
         main {
-            max-width: 1200px;
-            margin: 110px auto 60px;
+            max-width: 1100px;
+            margin: 110px auto 80px;
             padding: 0 20px;
         }
 
-        /* 2. 작업물 그리드 레이아웃 */
+        /* 2. 자기소개 섹션 */
+        .profile-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .profile-header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 24px;
+            margin-bottom: 24px;
+        }
+
+        .profile-name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .profile-title {
+            color: var(--highlight);
+            font-size: 1.05rem;
+            font-weight: 600;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            border-radius: 10px;
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: var(--text-sub);
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .about-me {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .about-me h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .about-me p {
+            color: #d1d1d6;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            white-space: pre-line;
+        }
+
+        /* 3. 작업물 그리드 레이아웃 */
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
         }
 
         .card {
@@ -112,7 +184,7 @@
 
         .card-img-wrapper {
             width: 100%;
-            height: 240px;
+            height: 220px;
             background-color: #202024;
             overflow: hidden;
             position: relative;
@@ -129,6 +201,20 @@
             transform: scale(1.04);
         }
 
+        /* 영상 보유 카드에는 비디오 태그 표시 */
+        .video-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            backdrop-filter: blur(4px);
+        }
+
         .card-info {
             padding: 20px;
             display: flex;
@@ -140,17 +226,16 @@
             font-size: 0.8rem;
             color: var(--text-sub);
             font-weight: 500;
-            text-transform: uppercase;
         }
 
         .card-title {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--text-main);
         }
 
         .card-desc {
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             color: var(--text-sub);
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -162,7 +247,7 @@
             display: none;
         }
 
-        /* 3. 모달 (상세 보기 팝업) */
+        /* 4. 모달 (상세 보기 팝업) */
         .modal {
             display: none;
             position: fixed;
@@ -170,7 +255,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.85);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -204,16 +289,50 @@
 
         .close-btn:hover { color: var(--text-main); }
 
-        .modal-title { font-size: 1.5rem; margin-bottom: 8px; }
-        .modal-category { color: var(--text-sub); font-size: 0.9rem; margin-bottom: 20px; }
-        .modal-img { width: 100%; border-radius: 8px; margin-bottom: 20px; }
-        .modal-desc { line-height: 1.7; color: #d1d1d6; }
+        .modal-title { font-size: 1.4rem; margin-bottom: 6px; }
+        .modal-category { color: var(--text-sub); font-size: 0.88rem; margin-bottom: 20px; }
+        
+        .modal-media-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .modal-img { 
+            width: 100%; 
+            border-radius: 8px; 
+            display: block;
+        }
+
+        /* 반응형 비디오 컨테이너 */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 비율 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .modal-desc { line-height: 1.7; color: #d1d1d6; font-size: 0.95rem; }
 
         /* 반응형 */
         @media (max-width: 768px) {
             nav { padding: 0 20px; }
-            .category-menu { gap: 12px; }
+            .category-menu { gap: 10px; }
             .category-btn { font-size: 0.85rem; }
+            .profile-section { padding: 24px; }
+            .profile-name { font-size: 1.8rem; }
             .portfolio-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -222,32 +341,68 @@
 
     <!-- 상단 네비게이션 -->
     <nav>
-        <!-- 왼쪽: 로고 -->
-        <a href="#" class="logo">PORTFOLIO.</a>
+        <a class="logo" onclick="filterCategory('about', event)">KIM JIN HYEON</a>
 
-        <!-- 오른쪽: 3가지 카테고리 -->
         <ul class="category-menu">
-            <li><button class="category-btn active" onclick="filterCategory('all')">ALL</button></li>
-            <li><button class="category-btn" onclick="filterCategory('office')">사무디자인·로고</button></li>
-            <li><button class="category-btn" onclick="filterCategory('web')">웹디자인</button></li>
-            <li><button class="category-btn" onclick="filterCategory('game')">게임·애니 (2D/3D)</button></li>
+            <li><button class="category-btn active" onclick="filterCategory('about', event)">소개 (About)</button></li>
+            <li><button class="category-btn" onclick="filterCategory('office', event)">사무디자인·로고</button></li>
+            <li><button class="category-btn" onclick="filterCategory('web', event)">웹디자인</button></li>
+            <li><button class="category-btn" onclick="filterCategory('game', event)">게임·애니 (2D/3D)</button></li>
         </ul>
     </nav>
 
-    <!-- 메인 콘텐츠 영역 -->
+    <!-- 메인 컨테이너 -->
     <main>
-        <div class="portfolio-grid" id="portfolio-grid">
-            <!-- 자바스크립트로 동적 카드 생성 -->
+
+        <!-- 1. 프로필 & 자기소개 섹션 -->
+        <section class="profile-section" id="profile-section">
+            <div class="profile-header">
+                <h1 class="profile-name">김진현</h1>
+                <p class="profile-title">2D/3D Graphic & Visual Designer</p>
+            </div>
+
+            <div class="profile-grid">
+                <div class="info-item">
+                    <div class="info-label">생년월일</div>
+                    <div class="info-value">1996. 11. 03</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">출신 대학</div>
+                    <div class="info-value">구미대학교 비주얼게임컨텐츠학과</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">MBTI / 작업 성향</div>
+                    <div class="info-value" style="color: var(--highlight);">INFJ (꼼꼼한 완벽주의)</div>
+                </div>
+            </div>
+
+            <div class="about-me">
+                <h3>About Me</h3>
+                <p>안녕하세요. 2D/3D 그래픽부터 버튜버(VTuber) 모델링, 웹 UI 및 브랜딩 디자인까지 섬세한 감각으로 시각적 완성도를 만들어내는 디자이너 김진현입니다. 
+
+구미대학교 비주얼게임컨텐츠학과에서 2D/3D 캐릭터 컨셉아트 및 버튜버 리깅, 트래킹 시연 기술을 전공하였으며, 디테일을 놓치지 않는 꼼꼼함으로 의뢰인이 원하는 완성도 높은 결과를 제작합니다.
+
+상단 메뉴의 카테고리를 클릭하시면 해당 분야의 포트폴리오만 보실 수 있으며, 버튜버 및 3D 모델링 항목에서는 시연 영상도 확인하실 수 있습니다.</p>
+            </div>
+        </section>
+
+        <!-- 2. 작업물 그리드 영역 -->
+        <div class="portfolio-grid" id="portfolio-grid" style="display: none;">
+            <!-- 동적 카드 생성 -->
         </div>
+
     </main>
 
-    <!-- 상세보기 모달 -->
+    <!-- 상세보기 모달 팝업 -->
     <div class="modal" id="modal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="close-btn" onclick="closeModal()">&times;</button>
             <h2 class="modal-title" id="modal-title"></h2>
             <p class="modal-category" id="modal-category"></p>
-            <img src="" alt="" class="modal-img" id="modal-img">
+            
+            <!-- 미디어(영상 및 이미지) 출력 영역 -->
+            <div class="modal-media-list" id="modal-media-list"></div>
+            
             <p class="modal-desc" id="modal-desc"></p>
         </div>
     </div>
@@ -260,17 +415,9 @@
                 id: 1,
                 category: 'office',
                 categoryLabel: '사무디자인 · 로고',
-                title: '모던 브랜드 CI / 로고 디자인',
-                desc: '기업 아이덴티티를 명확하게 전달하기 위한 미니멀 세리프 로고 및 사무용 서식 디자인 패키지입니다.',
-                image: 'https://picsum.photos/700/500?random=10'
-            },
-            {
-                id: 2,
-                category: 'office',
-                categoryLabel: '사무디자인 · 로고',
-                title: '스타트업 리브랜딩 & 브로슈어',
-                desc: '테크 스타트업의 신규 로고 및 사원증, 명함, 브랜딩 문서 가이드라인을 작업했습니다.',
-                image: 'https://picsum.photos/700/500?random=11'
+                title: '모던 브랜드 CI / 로고 디자인 패키지',
+                desc: '기업 아이덴티티를 명확하게 전달하기 위한 미니멀 세리프 로고 및 사무용 서식, 명함 디자인입니다.',
+                images: ['images/logo_main.png']
             },
 
             /* 2. 웹디자인 */
@@ -280,98 +427,122 @@
                 categoryLabel: '웹디자인',
                 title: '이커머스 브랜드 웹사이트',
                 desc: '사용자 경험(UX) 최적화 및 간결한 UI 레이아웃을 통해 구매 전환율을 높인 반응형 웹 인터페이스 디자인입니다.',
-                image: 'https://picsum.photos/700/500?random=20'
-            },
-            {
-                id: 4,
-                category: 'web',
-                categoryLabel: '웹디자인',
-                title: 'SaaS 대시보드 플랫폼 UI',
-                desc: '데이터 시각화를 극대화하고 다크모드 환경에 맞춰 가독성을 확보한 B2B 솔루션 대시보드입니다.',
-                image: 'https://picsum.photos/700/500?random=21'
+                images: ['images/web_ui_main.png']
             },
 
-            /* 3. 게임 및 애니메이션 디자인 (2D/3D 캐릭터, 무기, 소품) */
+            /* 3. 게임/애니/3D (버튜버 항목 포함!) */
             {
                 id: 5,
                 category: 'game',
-                categoryLabel: '게임 · 애니메이션 디자인',
-                title: 'SF 판타지 3D 캐릭터 모델링',
-                desc: 'ZBrush 및 blender를 활용해 고품질 텍스처링과 리깅까지 마친 게임용 메인 캐릭터 모델링입니다.',
-                image: 'https://picsum.photos/700/500?random=30'
+                categoryLabel: '게임 · 애니 · 3D',
+                title: '3D 버튜버(VTuber) 캐릭터 제작 & 파이셜 트래킹 시연',
+                desc: 'Blender로 자체 제작한 오리지널 3D 버튜버 아바타입니다. 헤어 및 의상 툰셰이딩, 블렌드셰이프(Blendshape) 표정 50종 구축 및 아이패드 파이셜 트래킹 시연 영상입니다.',
+                // 💡 유튜브 영상 주소 (embed 링크)
+                video: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // 본인의 유튜브 embed 주소로 교체하세요!
+                images: [
+                    'images/vtuber_front.png',
+                    'images/vtuber_expressions.png'
+                ]
             },
             {
                 id: 6,
                 category: 'game',
-                categoryLabel: '게임 · 애니메이션 디자인',
-                title: '2D 원화,3d모델링 - 판타지 무기 & 소품 컨셉아트',
-                desc: '게임 세계를 구성하는 전설 등급 무기 및 소품의 2D 컨셉 시안과 디테일 시트입니다.',
-                image: 'https://picsum.photos/700/500?random=31'
-            },
-            {
-                id: 7,
-                category: 'game',
-                categoryLabel: '게임 · 애니메이션 디자인',
-                title: '애니메이션용 2D 캐주얼 캐릭터 시트',
-                desc: '애니메이션 원화 작업용 턴어라운드 표현과 다양한 감정 표현 표정이 담긴 캐릭터 디자인입니다.',
-                image: 'https://picsum.photos/700/500?random=32'
+                categoryLabel: '게임 · 애니 · 3D',
+                title: '2D/3D 판타지 무기 & 소품 컨셉아트',
+                desc: '게임 세계를 구성하는 전설 등급 무기 및 소품의 2D 컨셉 시안과 3D 모델링 디테일 시트입니다.',
+                images: ['images/weapon_3d.png']
             }
         ];
 
         // 렌더링 함수
         function renderPortfolio() {
             const grid = document.getElementById('portfolio-grid');
-            grid.innerHTML = portfolioData.map(item => `
-                <div class="card" data-category="${item.category}" onclick="openModal(${item.id})">
-                    <div class="card-img-wrapper">
-                        <img src="${item.image}" alt="${item.title}">
+            grid.innerHTML = portfolioData.map(item => {
+                const mainImage = item.images ? item.images[0] : 'images/default.png';
+                const hasVideo = item.video ? '<span class="video-badge">🎬 시연 영상</span>' : '';
+                
+                return `
+                    <div class="card" data-category="${item.category}" onclick="openModal(${item.id})">
+                        <div class="card-img-wrapper">
+                            ${hasVideo}
+                            <img src="${mainImage}" alt="${item.title}">
+                        </div>
+                        <div class="card-info">
+                            <span class="card-tag">${item.categoryLabel}</span>
+                            <h3 class="card-title">${item.title}</h3>
+                            <p class="card-desc">${item.desc}</p>
+                        </div>
                     </div>
-                    <div class="card-info">
-                        <span class="card-tag">${item.categoryLabel}</span>
-                        <h3 class="card-title">${item.title}</h3>
-                        <p class="card-desc">${item.desc}</p>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
-        // 카테고리 필터링
-        function filterCategory(category) {
-            // 버튼 활성화 스타일 변경
+        // 카테고리 스위칭
+        function filterCategory(category, event) {
             const buttons = document.querySelectorAll('.category-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if(event) event.target.classList.add('active');
 
-            // 카테고리 카드 필터링
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.classList.remove('hide');
-                } else {
-                    card.classList.add('hide');
-                }
-            });
+            const profileSection = document.getElementById('profile-section');
+            const grid = document.getElementById('portfolio-grid');
+
+            if (category === 'about') {
+                profileSection.style.display = 'block';
+                grid.style.display = 'none';
+            } else {
+                profileSection.style.display = 'none';
+                grid.style.display = 'grid';
+
+                const cards = document.querySelectorAll('.card');
+                cards.forEach(card => {
+                    if (card.dataset.category === category) {
+                        card.classList.remove('hide');
+                    } else {
+                        card.classList.add('hide');
+                    }
+                });
+            }
         }
 
-        // 모달 열기
+        // 모달 열기 (영상 + 이미지 통합 출력)
         function openModal(id) {
             const item = portfolioData.find(p => p.id === id);
             if (!item) return;
 
             document.getElementById('modal-title').innerText = item.title;
             document.getElementById('modal-category').innerText = item.categoryLabel;
-            document.getElementById('modal-img').src = item.image;
             document.getElementById('modal-desc').innerText = item.desc;
 
+            const mediaContainer = document.getElementById('modal-media-list');
+            let mediaHTML = '';
+
+            // 1. 비디오가 있을 경우 상단에 유튜브 플레이어 삽입
+            if (item.video) {
+                mediaHTML += `
+                    <div class="video-container">
+                        <iframe src="${item.video}" allowfullscreen></iframe>
+                    </div>
+                `;
+            }
+
+            // 2. 이미지들 순서대로 삽입
+            if (item.images) {
+                item.images.forEach(imgSrc => {
+                    mediaHTML += `<img src="${imgSrc}" alt="${item.title}" class="modal-img">`;
+                });
+            }
+
+            mediaContainer.innerHTML = mediaHTML;
             document.getElementById('modal').classList.add('open');
         }
 
         // 모달 닫기
         function closeModal(event) {
             document.getElementById('modal').classList.remove('open');
+            // 모달을 닫으면 소리 계속 나는 현상 방지를 위해 영상 제거
+            document.getElementById('modal-media-list').innerHTML = '';
         }
 
-        // 초기 실행
         renderPortfolio();
     </script>
 </body>
