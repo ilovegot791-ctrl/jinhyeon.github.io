@@ -201,7 +201,6 @@
             transform: scale(1.04);
         }
 
-        /* 영상 보유 카드에는 비디오 태그 표시 */
         .video-badge {
             position: absolute;
             top: 12px;
@@ -305,10 +304,9 @@
             display: block;
         }
 
-        /* 반응형 비디오 컨테이너 */
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 비율 */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: 8px;
@@ -326,7 +324,6 @@
 
         .modal-desc { line-height: 1.7; color: #d1d1d6; font-size: 0.95rem; }
 
-        /* 반응형 */
         @media (max-width: 768px) {
             nav { padding: 0 20px; }
             .category-menu { gap: 10px; }
@@ -347,7 +344,7 @@
             <li><button class="category-btn active" onclick="filterCategory('about', event)">소개 (About)</button></li>
             <li><button class="category-btn" onclick="filterCategory('office', event)">사무디자인·로고</button></li>
             <li><button class="category-btn" onclick="filterCategory('web', event)">웹디자인</button></li>
-            <li><button class="category-btn" onclick="filterCategory('game', event)">게임·애니 (2D/3D)</button></li>
+            <li><button class="category-btn" onclick="filterCategory('game', event)">2D/3D 그래픽 · 버튜버</button></li>
         </ul>
     </nav>
 
@@ -358,7 +355,7 @@
         <section class="profile-section" id="profile-section">
             <div class="profile-header">
                 <h1 class="profile-name">김진현</h1>
-                <p class="profile-title">2D/3D Graphic & Visual Designer</p>
+                <p class="profile-title">2D Character Artist & 3D Modeler</p>
             </div>
 
             <div class="profile-grid">
@@ -372,17 +369,17 @@
                 </div>
                 <div class="info-item">
                     <div class="info-label">MBTI / 작업 성향</div>
-                    <div class="info-value" style="color: var(--highlight);">INFJ (꼼꼼한 완벽주의)</div>
+                    <div class="info-value" style="color: var(--highlight);">INTP / INFP (독창적 아이디어)</div>
                 </div>
             </div>
 
             <div class="about-me">
                 <h3>About Me</h3>
-                <p>안녕하세요. 2D/3D 그래픽부터 버튜버(VTuber) 모델링, 웹 UI 및 브랜딩 디자인까지 섬세한 감각으로 시각적 완성도를 만들어내는 디자이너 김진현입니다. 
+                <p>안녕하세요. 매력적인 2D 캐릭터 원화 설계부터 이를 입체화하는 3D 캐릭터 모델링 및 버튜버(VTuber) 제작을 전문으로 하는 디자이너 김진현입니다. 
 
-구미대학교 비주얼게임컨텐츠학과에서 2D/3D 캐릭터 컨셉아트 및 버튜버 리깅, 트래킹 시연 기술을 전공하였으며, 디테일을 놓치지 않는 꼼꼼함으로 의뢰인이 원하는 완성도 높은 결과를 제작합니다.
+구미대학교 비주얼게임컨텐츠학과에서 2D 캐릭터 컨셉아트와 3D 모델링, 툰셰이딩 및 리깅 기법을 전공하였습니다. 독창적인 영감과 강한 탐구 능력을 바탕으로, 의뢰인이 구상하는 캐릭터 세계관에 생명력을 불어넣는 섬세한 작업물을 제작합니다.
 
-상단 메뉴의 카테고리를 클릭하시면 해당 분야의 포트폴리오만 보실 수 있으며, 버튜버 및 3D 모델링 항목에서는 시연 영상도 확인하실 수 있습니다.</p>
+상단 메뉴의 카테고리를 클릭하시면 원화 시트 및 3D 모델링, 버튜버 시연 영상 포트폴리오를 감상하실 수 있습니다.</p>
             </div>
         </section>
 
@@ -400,7 +397,6 @@
             <h2 class="modal-title" id="modal-title"></h2>
             <p class="modal-category" id="modal-category"></p>
             
-            <!-- 미디어(영상 및 이미지) 출력 영역 -->
             <div class="modal-media-list" id="modal-media-list"></div>
             
             <p class="modal-desc" id="modal-desc"></p>
@@ -408,7 +404,7 @@
     </div>
 
     <script>
-        // 포트폴리오 데이터
+        // 포트폴리오 데이터 (2D 캐릭터 원화 & 3D 모델링 중심)
         const portfolioData = [
             /* 1. 사무디자인 - 로고 */
             {
@@ -422,39 +418,59 @@
 
             /* 2. 웹디자인 */
             {
-                id: 3,
+                id: 2,
                 category: 'web',
                 categoryLabel: '웹디자인',
-                title: '이커머스 브랜드 웹사이트',
-                desc: '사용자 경험(UX) 최적화 및 간결한 UI 레이아웃을 통해 구매 전환율을 높인 반응형 웹 인터페이스 디자인입니다.',
+                title: '이커머스 브랜드 웹사이트 UI/UX',
+                desc: '사용자 경험 최적화 및 간결한 UI 레이아웃을 반영한 반응형 웹 디자인입니다.',
                 images: ['images/web_ui_main.png']
             },
 
-            /* 3. 게임/애니/3D (버튜버 항목 포함!) */
+            /* 3. 2D/3D 그래픽 & 버튜버 (SF 제어, 원화/모델링 집중) */
             {
-                id: 5,
+                id: 3,
                 category: 'game',
-                categoryLabel: '게임 · 애니 · 3D',
-                title: '3D 버튜버(VTuber) 캐릭터 제작 & 파이셜 트래킹 시연',
-                desc: 'Blender로 자체 제작한 오리지널 3D 버튜버 아바타입니다. 헤어 및 의상 툰셰이딩, 블렌드셰이프(Blendshape) 표정 50종 구축 및 아이패드 파이셜 트래킹 시연 영상입니다.',
-                // 💡 유튜브 영상 주소 (embed 링크)
-                video: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // 본인의 유튜브 embed 주소로 교체하세요!
+                categoryLabel: '2D/3D 그래픽 · 버튜버',
+                title: '3D 버튜버(VTuber) 아바타 제작 & 트래킹 시연',
+                desc: '자체 제작한 오리지널 3D 버튜버 모델입니다. 헤어/의상 툰셰이딩, 표정 블렌드셰이프 구축 및 실시간 트래킹 시연 영상입니다.',
+                video: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // 본인의 유튜브 embed 주소
                 images: [
                     'images/vtuber_front.png',
                     'images/vtuber_expressions.png'
                 ]
             },
             {
+                id: 4,
+                category: 'game',
+                categoryLabel: '2D/3D 그래픽 · 버튜버',
+                title: '판타지 2D 캐릭터 원화 & 턴어라운드 시트',
+                desc: '캐릭터의 개성과 서사를 담아낸 오리지널 2D 원화 작업입니다. 전/측/후면 턴어라운드 및 의상 디테일, 표정 모음집이 포함되어 있습니다.',
+                images: [
+                    'images/character_2d_front.png',
+                    'images/character_2d_sheet.png'
+                ]
+            },
+            {
+                id: 5,
+                category: 'game',
+                categoryLabel: '2D/3D 그래픽 · 버튜버',
+                title: '2D 원화 기반 3D 캐릭터 모델링',
+                desc: '2D 캐릭터 시안을 바탕으로 3D 공간 상에서 원화의 비율과 미형을 완벽히 구현해낸 3D 캐릭터 모델링 작업물입니다.',
+                images: [
+                    'images/character_3d_render.png',
+                    'images/character_3d_wire.png'
+                ]
+            },
+            {
                 id: 6,
                 category: 'game',
-                categoryLabel: '게임 · 애니 · 3D',
-                title: '2D/3D 판타지 무기 & 소품 컨셉아트',
-                desc: '게임 세계를 구성하는 전설 등급 무기 및 소품의 2D 컨셉 시안과 3D 모델링 디테일 시트입니다.',
-                images: ['images/weapon_3d.png']
+                categoryLabel: '2D/3D 그래픽 · 버튜버',
+                title: '캐주얼 2D 무기 & 소품 컨셉아트',
+                desc: '게임 및 캐릭터에 어울리는 오리지널 무기 및 소품의 2D 컨셉아트 시트입니다.',
+                images: ['images/weapon_2d.png']
             }
         ];
 
-        // 렌더링 함수
         function renderPortfolio() {
             const grid = document.getElementById('portfolio-grid');
             grid.innerHTML = portfolioData.map(item => {
@@ -477,7 +493,6 @@
             }).join('');
         }
 
-        // 카테고리 스위칭
         function filterCategory(category, event) {
             const buttons = document.querySelectorAll('.category-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
@@ -504,7 +519,6 @@
             }
         }
 
-        // 모달 열기 (영상 + 이미지 통합 출력)
         function openModal(id) {
             const item = portfolioData.find(p => p.id === id);
             if (!item) return;
@@ -516,7 +530,6 @@
             const mediaContainer = document.getElementById('modal-media-list');
             let mediaHTML = '';
 
-            // 1. 비디오가 있을 경우 상단에 유튜브 플레이어 삽입
             if (item.video) {
                 mediaHTML += `
                     <div class="video-container">
@@ -525,7 +538,6 @@
                 `;
             }
 
-            // 2. 이미지들 순서대로 삽입
             if (item.images) {
                 item.images.forEach(imgSrc => {
                     mediaHTML += `<img src="${imgSrc}" alt="${item.title}" class="modal-img">`;
@@ -536,10 +548,8 @@
             document.getElementById('modal').classList.add('open');
         }
 
-        // 모달 닫기
         function closeModal(event) {
             document.getElementById('modal').classList.remove('open');
-            // 모달을 닫으면 소리 계속 나는 현상 방지를 위해 영상 제거
             document.getElementById('modal-media-list').innerHTML = '';
         }
 
