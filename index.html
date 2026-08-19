@@ -4,112 +4,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>김진현 포트폴리오</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>포트폴리오 매니저</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --accent-color: #6366f1;
-            --accent-hover: #4f46e5;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --input-bg: #2a2a2a;
+            --accent-color: #3b82f6;
+            --text-main: #ffffff;
+            --text-sub: #a0a0a0;
+            --border-color: #333333;
             --danger-color: #ef4444;
-            --text-main: #f8fafc;
-            --text-sub: #94a3b8;
-            --border-color: #334155;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Pretendard', -apple-system, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.6;
-            padding: 30px 15px;
+            line-height: 1.5;
+            padding: 40px 20px;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
         header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
+            text-align: left;
         }
 
         header h1 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #a5b4fc, #6366f1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 6px;
         }
 
-        header p { color: var(--text-sub); font-size: 1rem; }
+        header p { color: var(--text-sub); font-size: 0.95rem; }
 
-        /* 컨트롤 버튼 그룹 */
+        /* 컨트롤 영역 */
         .controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            gap: 10px;
-            flex-wrap: wrap; /* Added for responsiveness */
+            margin-bottom: 24px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
+
+        .btn-group { display: flex; gap: 8px; }
 
         .btn {
-            background-color: var(--accent-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
+            background-color: var(--input-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: background 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            transition: all 0.2s;
         }
 
-        .btn:hover { background-color: var(--accent-hover); }
-        .btn-danger { background-color: #dc2626; }
-        .btn-danger:hover { background-color: #b91c1c; }
+        .btn:hover { background-color: #333333; }
+        .btn-primary { background-color: var(--accent-color); border: none; }
+        .btn-primary:hover { background-color: #2563eb; }
+        .btn-danger { color: var(--danger-color); border-color: rgba(239, 68, 68, 0.3); }
+        .btn-danger:hover { background-color: rgba(239, 68, 68, 0.1); }
 
-        /* 프로젝트 리스트 */
+        /* 프로젝트 카드 리스트 */
         .project-list {
             display: flex;
             flex-direction: column;
-            gap: 35px;
+            gap: 24px;
         }
 
         .project-card {
             background-color: var(--card-bg);
-            border-radius: 16px;
+            border-radius: 12px;
             border: 1px solid var(--border-color);
-            padding: 24px;
-            position: relative;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            padding: 20px;
         }
 
-        .card-header-inputs {
+        .inputs-group {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-bottom: 20px;
         }
 
         input[type="text"], textarea {
             width: 100%;
-            background-color: #0f172a;
+            background-color: var(--input-bg);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 10px 14px;
-            border-radius: 8px;
+            padding: 10px 12px;
+            border-radius: 6px;
             font-family: inherit;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         input[type="text"]:focus, textarea:focus {
@@ -117,48 +111,45 @@
             border-color: var(--accent-color);
         }
 
-        .input-category { font-weight: 600; color: var(--accent-color); font-size: 0.85rem; }
-        .input-title { font-size: 1.3rem; font-weight: 700; }
+        .input-category { color: var(--accent-color); font-weight: 600; }
+        .input-title { font-size: 1.1rem; font-weight: 600; }
 
         /* 드래그 앤 드롭 영역 */
         .drop-zone {
-            border: 2px dashed var(--border-color);
-            border-radius: 12px;
-            padding: 30px 20px;
+            border: 1px dashed var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
             text-align: center;
-            background-color: rgba(15, 23, 42, 0.5);
+            background-color: rgba(255, 255, 255, 0.02);
             cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 15px;
+            margin-top: 12px;
+            transition: background 0.2s;
         }
 
-        .drop-zone.dragover {
+        .drop-zone:hover, .drop-zone.dragover {
+            background-color: rgba(255, 255, 255, 0.05);
             border-color: var(--accent-color);
-            background-color: rgba(99, 102, 241, 0.1);
         }
 
         .drop-zone-text {
             color: var(--text-sub);
-            font-size: 0.95rem;
+            font-size: 0.85rem;
             pointer-events: none;
         }
-
-        .drop-zone-text b { color: var(--accent-color); }
 
         /* 이미지 갤러리 */
         .image-gallery {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-top: 15px;
+            gap: 12px;
+            margin-top: 12px;
         }
 
         .img-item {
             position: relative;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
             border: 1px solid var(--border-color);
-            background-color: #000;
         }
 
         .img-item img {
@@ -169,19 +160,19 @@
 
         .img-delete-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 8px;
+            right: 8px;
             background: rgba(0, 0, 0, 0.7);
             color: white;
             border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            border-radius: 4px;
+            width: 26px;
+            height: 26px;
             cursor: pointer;
-            font-weight: bold;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 0.8rem;
         }
 
         .img-delete-btn:hover { background: var(--danger-color); }
@@ -189,34 +180,33 @@
         .card-actions {
             display: flex;
             justify-content: flex-end;
-            margin-top: 15px;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎨 DESIGN PORTFOLIO</h1>
-            <p>드래그 앤 드롭으로 작업물과 이미지를 자유롭게 관리하세요.</p>
+            <h1>Portfolio Manager</h1>
+            <p>작업물과 이미지를 자유롭게 수정하고 관리하세요.</p>
         </header>
 
         <div class="controls">
-            <span id="project-count" style="color: var(--text-sub);">총 3개의 프로젝트</span>
-            <div>
-                <button class="btn" onclick="addNewProject()">➕ 새 작업물 추가하기</button>
-                <button class="btn" onclick="saveProjectData()">💾 데이터 저장</button>
-                <button class="btn" onclick="document.getElementById('loadFileInput').click()">📂 데이터 불러오기</button>
+            <span id="project-count" style="color: var(--text-sub); font-size: 0.9rem;">총 0개의 프로젝트</span>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="addNewProject()">+ 작업물 추가</button>
+                <button class="btn" onclick="saveProjectData()">저장</button>
+                <button class="btn" onclick="document.getElementById('loadFileInput').click()">불러오기</button>
                 <input type="file" id="loadFileInput" accept=".json" style="display: none;" onchange="loadProjectData(event)">
             </div>
         </div>
 
-        <div id="project-list" class="project-list">
-            <!-- 동적으로 프로젝트 카드가 생성됩니다 -->
-        </div>
+        <div id="project-list" class="project-list"></div>
     </div>
 
     <script>
-        // 초기 작업물 데이터
         let projects = [
             {
                 id: 1,
@@ -256,27 +246,23 @@
                 const card = document.createElement('div');
                 card.className = 'project-card';
                 card.innerHTML = `
-                    <div class="card-header-inputs">
-                        <input type="text" class="input-category" value="${proj.category}" placeholder="카테고리 (예: 일러스트/3D)" onchange="updateProject(${index}, 'category', this.value)">
-                        <input type="text" class="input-title" value="${proj.title}" placeholder="작업물 제목" onchange="updateProject(${index}, 'title', this.value)">
+                    <div class="inputs-group">
+                        <input type="text" class="input-category" value="${proj.category}" placeholder="카테고리" onchange="updateProject(${index}, 'category', this.value)">
+                        <input type="text" class="input-title" value="${proj.title}" placeholder="제목" onchange="updateProject(${index}, 'title', this.value)">
                         <input type="text" value="${proj.tags}" placeholder="태그 (쉼표로 구분)" onchange="updateProject(${index}, 'tags', this.value)">
-                        <textarea rows="2" placeholder="작업물에 대한 설명을 입력하세요" onchange="updateProject(${index}, 'description', this.value)">${proj.description}</textarea>
-                        <textarea rows="2" placeholder="추가 내용 (예: 작업 의도, 사용 기술)" onchange="updateProject(${index}, 'additional_text', this.value)">${proj.additional_text}</textarea>
+                        <textarea rows="2" placeholder="작업물 설명" onchange="updateProject(${index}, 'description', this.value)">${proj.description}</textarea>
+                        <textarea rows="2" placeholder="추가 상세 내용" onchange="updateProject(${index}, 'additional_text', this.value)">${proj.additional_text}</textarea>
                     </div>
 
-                    <!-- 드래그 앤 드롭 영역 -->
                     <div class="drop-zone" id="drop-zone-${index}"
                          ondragover="handleDragOver(event, ${index})"
                          ondragleave="handleDragLeave(event, ${index})"
                          ondrop="handleDrop(event, ${index})"
                          onclick="triggerFileInput(${index})">
-                        <div class="drop-zone-text">
-                            📁 <b>이미지를 이곳에 드래그 앤 드롭</b> 하거나 클릭하여 업로드하세요.
-                        </div>
+                        <div class="drop-zone-text">이미지를 드래그하여 놓거나 클릭해서 업로드하세요.</div>
                         <input type="file" id="file-input-${index}" multiple accept="image/*" style="display:none" onchange="handleFileSelect(event, ${index})">
                     </div>
 
-                    <!-- 업로드된 이미지 리스트 -->
                     <div class="image-gallery" id="gallery-${index}">
                         ${proj.images.map((imgSrc, imgIndex) => `
                             <div class="img-item">
@@ -287,47 +273,42 @@
                     </div>
 
                     <div class="card-actions">
-                        <button class="btn btn-danger" onclick="deleteProject(${index})">🗑️ 카드 삭제</button>
+                        <button class="btn btn-danger" onclick="deleteProject(${index})">삭제</button>
                     </div>
                 `;
                 listContainer.appendChild(card);
             });
         }
 
-        // 데이터 업데이트
         function updateProject(index, key, value) {
             projects[index][key] = value;
         }
 
-        // 프로젝트 추가
         function addNewProject() {
             projects.unshift({
                 id: Date.now(),
-                category: "새 카테고리",
-                title: "새 작업물 제목",
-                tags: "태그1, 태그2",
-                description: "작업물에 대한 설명을 입력해 주세요.",
+                category: "",
+                title: "",
+                tags: "",
+                description: "",
                 images: [],
                 additional_text: ""
             });
             renderProjects();
         }
 
-        // 프로젝트 삭제
         function deleteProject(index) {
-            if (confirm("이 작업물 카드를 삭제하시겠습니까?")) {
+            if (confirm("이 카드를 삭제하시겠습니까?")) {
                 projects.splice(index, 1);
                 renderProjects();
             }
         }
 
-        // 이미지 삭제
         function deleteImage(projIndex, imgIndex) {
             projects[projIndex].images.splice(imgIndex, 1);
             renderProjects();
         }
 
-        // 파일 드래그 앤 드롭 처리
         function handleDragOver(e, index) {
             e.preventDefault();
             document.getElementById(`drop-zone-${index}`).classList.add('dragover');
@@ -341,8 +322,7 @@
         function handleDrop(e, index) {
             e.preventDefault();
             document.getElementById(`drop-zone-${index}`).classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            processFiles(files, index);
+            processFiles(e.dataTransfer.files, index);
         }
 
         function triggerFileInput(index) {
@@ -350,11 +330,9 @@
         }
 
         function handleFileSelect(e, index) {
-            const files = e.target.files;
-            processFiles(files, index);
+            processFiles(e.target.files, index);
         }
 
-        // 이미지 읽기 (Base64 변환)
         function processFiles(files, projIndex) {
             Array.from(files).forEach(file => {
                 if (file.type.startsWith('image/')) {
@@ -368,63 +346,49 @@
             });
         }
 
-        // 프로젝트 데이터 저장 함수
         function saveProjectData() {
-            let filename = prompt('저장할 파일 이름을 입력하세요 (예: my_portfolio.json):', 'portfolio_data.json');
-            if (filename === null) { // User cancelled the prompt
-                return;
-            }
-            if (!filename.endsWith('.json')) {
-                filename += '.json';
-            }
+            let filename = prompt('저장할 파일 이름을 입력하세요:', 'portfolio_data.json');
+            if (!filename) return;
+            if (!filename.endsWith('.json')) filename += '.json';
 
-            const dataStr = JSON.stringify(projects, null, 2); // Pretty print JSON
-            const blob = new Blob([dataStr], { type: 'application/json' });
+            const blob = new Blob([JSON.stringify(projects, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
             a.download = filename;
-            document.body.appendChild(a); // Append to body to make it clickable
+            document.body.appendChild(a);
             a.click();
-            document.body.removeChild(a); // Clean up
-            URL.revokeObjectURL(url); // Release object URL
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
-        // 프로젝트 데이터 불러오기 함수
         function loadProjectData(event) {
             const file = event.target.files[0];
-            if (!file) {
-                return;
-            }
+            if (!file) return;
+
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const loadedData = JSON.parse(e.target.result);
-                    if (Array.isArray(loadedData) && loadedData.every(item => 'id' in item && 'category' in item && 'title' in item)) {
-                        // Ensure new fields are initialized if not present in loaded data
-                        const normalizedData = loadedData.map(item => ({
-                            id: item.id,
+                    if (Array.isArray(loadedData)) {
+                        projects = loadedData.map(item => ({
+                            id: item.id || Date.now(),
                             category: item.category || "",
                             title: item.title || "",
                             tags: item.tags || "",
                             description: item.description || "",
                             images: item.images || [],
-                            additional_text: item.additional_text || "" // Initialize new field
+                            additional_text: item.additional_text || ""
                         }));
-                        projects = normalizedData;
                         renderProjects();
-                        alert('데이터를 성공적으로 불러왔습니다!');
-                    } else {
-                        alert('유효하지 않은 JSON 파일 형식입니다.');
                     }
                 } catch (error) {
-                    alert('파일을 파싱하는 중 오류가 발생했습니다: ' + error.message);
+                    alert('파일을 읽는 중 오류가 발생했습니다.');
                 }
             };
             reader.readAsText(file);
         }
 
-        // 초기 실행
         renderProjects();
     </script>
 </body>
